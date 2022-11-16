@@ -3,12 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 
 function Navbar() {
   let active = useLocation();
-  React.useEffect(() => { 
-    let eles = document.getElementsByClassName("nav-link");
-  
-    
-
-  }, [active]);
 
   
   return (
