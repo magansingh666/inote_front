@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import Login from "./Login";
 import Notes from "./Notes";
 
 function Home() {
@@ -9,7 +10,7 @@ function Home() {
 
   return (   
     <div>
-      {isLoggedIn && <Notes />}
+      {isLoggedIn ? <Notes /> : <Login />}
     </div>
   );
 }
