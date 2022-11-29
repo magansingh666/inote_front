@@ -1,12 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Notes from "./Notes";
 
 function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect( () => {
+    localStorage.getItem("token") ? setIsLoggedIn(true) : setIsLoggedIn(false);
+  }, []);
 
-  return (
-   
+  return (   
     <div>
-      <Notes />
+      {isLoggedIn && <Notes />}
     </div>
   );
 }
