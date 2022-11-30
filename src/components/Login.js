@@ -2,12 +2,16 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom';
 
+const host = process.env.REACT_APP_HOST;
+let url = `${host}/api/auth/login`;
+//http://localhost:5001/api/auth/login
+
 const Login = props => {
     const [credentials, setCredentials] = useState({email:"meenakshimahakal@gmail.com", password: "iamsanyonigaitaagni"});
     let history = useHistory();
     
     const fetchData = async () => {
-        let response = await fetch("http://localhost:5001/api/auth/login" , {
+        let response = await fetch(url , {
             'method' : 'POST',
             'headers' : {
                 'Content-Type': 'application/json', 

@@ -2,15 +2,15 @@ import NoteContext from "./noteContext";
 import { useState } from "react";
 
 const NoteState = (props) => {
-  const host = "http://localhost:5001";
+  //let host = "http://localhost:5001";
+  let host = process.env.REACT_APP_HOST;
   const user_token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjM2OWQ5OWYwNTYxZDdkZjVkM2VhODEyIn0sImlhdCI6MTY2Nzk5MzE4Mn0.zK35KQO0VXajh706GblFUjMpatASLewMHiFkEEac4po";
 
   const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
   const [updating, setUpdating] = useState(null);
-  const [alertMessage, setAlertMessage] = useState("hhhhhhiz it is a really long messaga na tsho check it out");
-  //http://localhost:5001/api/note/fetchallnotes
+  const [alertMessage, setAlertMessage] = useState("Alert Message");
 
   const getNotes = async () => {
     console.log("making api call to fetch all notes");
@@ -63,9 +63,7 @@ const NoteState = (props) => {
   // Edit a Note
   const editNote = async (id, title, description) => {
     console.log("Edit note is being called", id, title, description);
-    let url1 = "${host}/api/note/updatenote/${id}";
-    let url2 =
-      "http://localhost:5001/api/note/updatenote/6374c6cb4e4e6eb52c4c43f1";
+    
     const response = await fetch(`${host}/api/note/updatenote/${id}`, {
       method: "PUT",
       headers: {
