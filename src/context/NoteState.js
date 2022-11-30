@@ -2,15 +2,15 @@ import NoteContext from "./noteContext";
 import { useState } from "react";
 
 const NoteState = (props) => {
-  //let host = "http://localhost:5001";
   let host = process.env.REACT_APP_HOST;
-  const user_token =
+  const user_token1 =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjM2OWQ5OWYwNTYxZDdkZjVkM2VhODEyIn0sImlhdCI6MTY2Nzk5MzE4Mn0.zK35KQO0VXajh706GblFUjMpatASLewMHiFkEEac4po";
 
   const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
   const [updating, setUpdating] = useState(null);
   const [alertMessage, setAlertMessage] = useState("Alert Message");
+  const [user_token, setUserToken] = useState("");
 
   const getNotes = async () => {
     console.log("making api call to fetch all notes");
@@ -102,6 +102,7 @@ const NoteState = (props) => {
         updating,
         alertMessage,
         setAlertMessage,
+        setUserToken,
       }}
     >
       {props.children}

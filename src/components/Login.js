@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom';
+import noteContext from '../context/noteContext';
 
 const host = process.env.REACT_APP_HOST;
 let url = `${host}/api/auth/login`;
 //http://localhost:5001/api/auth/login
 
 const Login = props => {
-    const [credentials, setCredentials] = useState({email:"meenakshimahakal@gmail.com", password: "iamsanyonigaitaagni"});
+    const [credentials, setCredentials] = useState({email:"robertkmerton@gmail.com", password: "robertkmerton"});
     let history = useHistory();
     
     const fetchData = async () => {
@@ -19,21 +20,22 @@ const Login = props => {
             body: JSON.stringify(credentials)
         });
         const json = await response.json()
-        console.log("status is ---");
+
         console.log(response.status);
         try{
             if(response.status === 200){
             const authtoken = json.authtoken;
             localStorage.setItem("token", authtoken);
             history.push("/");
+
             console.log(localStorage.getItem("token"));
             }  
             else{
-                alert("some Error");
+                alert("Error. request is not suceessful");
             }        
 
         }catch(e){
-            alert("Some Error"); 
+            alert("Error"); 
 
         }
 
