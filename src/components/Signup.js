@@ -2,20 +2,23 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import noteContext from "../context/noteContext";
+import Loading from "./Loading";
 
 const host = process.env.REACT_APP_HOST;
 let url = `${host}/api/auth/createuser`;
 
 const Signup = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [credentials, setCredentials] = useState({
-    email: "meenakshimahakal@gmail.com",
-    password: "iamsanyonigaitaagni",
+    email: "",
+    password: "",
     name: "",
   });
   let history = useHistory();
   const { setAlertMessage } = useContext(noteContext);
 
   const fetchData = async () => {
+    setIsLoading(true);
     let response = await fetch(url, {
       method: "POST",
       headers: {
@@ -28,13 +31,16 @@ const Signup = (props) => {
     try {
       const authtoken = json.authtoken;
       if (!authtoken) {
+        setIsLoading(false);
         setAlertMessage("Invalid Credential or may be user already exist");
         return;
       }
       console.log(authtoken);
+      setIsLoading(false);
       setAlertMessage("Sign Up Success. Now you  can login with your credentials");
       history.push("/login");
     } catch (e) {
+      setIsLoading(false);
       setAlertMessage("Invalid Credential or may be user already exist");
     }
   };
@@ -52,8 +58,8 @@ const Signup = (props) => {
   };
 
   return (
-    <div>
-      <h1>SignUp</h1>
+    <div style={{"width": "400px", "margin": "10px auto"}}>
+      <h3>Register here...</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
@@ -82,7 +88,7 @@ const Signup = (props) => {
             name="email"
             aria-describedby="emailHelp"
           />
-          <div id="emailHelp" className="form-text">
+          <div id="emailHelp" className="form-text text-secondary">
             We'll never share your email with anyone else.
           </div>
         </div>
@@ -99,11 +105,17 @@ const Signup = (props) => {
             id="password"
           />
         </div>
-
+        <div style={{"textAlign": "right"}}>
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
+
+        </div>
+
+        
       </form>
+
+      {isLoading && <Loading />}
     </div>
   );
 };

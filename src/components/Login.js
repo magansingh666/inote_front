@@ -2,16 +2,19 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom';
 import noteContext from '../context/noteContext';
+import Loading from './Loading';
 
 const host = process.env.REACT_APP_HOST;
 let url = `${host}/api/auth/login`;
 //http://localhost:5001/api/auth/login
 
 const Login = props => {
+    const [isLoading, setIsLoading] = useState(false);
     const [credentials, setCredentials] = useState({email:"robertkmerton@gmail.com", password: "robertkmerton"});
     let history = useHistory();
     
     const fetchData = async () => {
+        setIsLoading(true);
         let response = await fetch(url , {
             'method' : 'POST',
             'headers' : {
@@ -24,6 +27,7 @@ const Login = props => {
         console.log(response.status);
         try{
             if(response.status === 200){
+            setIsLoading(false);
             const authtoken = json.authtoken;
             localStorage.setItem("token", authtoken);
             history.push("/");
@@ -32,10 +36,12 @@ const Login = props => {
             }  
             else{
                 alert("Error. request is not suceessful");
+                setIsLoading(false);
             }        
 
         }catch(e){
             alert("Error"); 
+            setIsLoading(false);
 
         }
 
@@ -50,26 +56,29 @@ const Login = props => {
 
     const onChange = (e) => {
         e.preventDefault();
-        setCredentials();
         setCredentials({...credentials, [e.target.name] : e.target.value});
 
     }
 
   return (
-    <div>
-      <h1>I am Login component</h1>
+    <div style={{"maxWidth": "400px", "margin": "10px auto"}}>
+      <h5 style={{"textAlign": "center"}}>Login</h5>
+      {isLoading && <Loading />}
       <form  onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" className="form-control" value={credentials.email} onChange={onChange} id="email" name="email" aria-describedby="emailHelp" />
-                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                    <label htmlFor="email" className="form-label">Email</label>
+                    <input type="email" className="form-control" value={credentials.email} onChange={onChange} 
+                    id="email" name="email" placeholder='Email' aria-describedby="emailHelp" />
+                    
                 </div>
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label">Password</label>
                     <input type="password" className="form-control" value={credentials.password} onChange={onChange} name="password" id="password" />
                 </div>
-
+                <div style={{"textAlign": "right"}}>
                 <button type="submit" className="btn btn-primary">Submit</button>
+                </div>
+               
             </form>
     </div>
   )

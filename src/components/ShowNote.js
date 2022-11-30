@@ -11,11 +11,14 @@ const ShowNote = () => {
     const context = useContext(noteContext);
     const {addNote} = context;
     const [note, setNote] = useState({title: "", description: "", tag: "default"})
+    const [disabled, setDisabled] = useState(false);
     
 
-    const handleClick = (e)=>{
-        e.preventDefault();      
-        addNote(note.title, note.description, note.tag);
+    const handleClick = async (e)=>{
+        e.preventDefault();
+        setDisabled(true);  
+        await addNote(note.title, note.description, note.tag);
+        setDisabled(false);
     }
 
 
@@ -44,10 +47,15 @@ const ShowNote = () => {
                     <Edit4 onChange={onQuillEditorChange}/>                       
                 </div>
 
+                <div style={{"textAlign": "right", "visibility": !disabled ? "visible": "hidden"}}>
+                <img style={{"visibility": disabled ? "visible": "hidden"}}
+                src='https://i.gifer.com/YlWC.gif' height="50px" width="50px"></img>
+                {<button type="submit" className="btn btn-primary"
+                onClick={handleClick}>SAVE</button>}              
 
-               
+                </div>              
                          
-                <button type="submit" className="btn btn-primary" onClick={handleClick}>SAVE</button>
+                
             </form>
         </div>
     )

@@ -26,11 +26,11 @@ function Navbar() {
         </ul>
       </div>
       {localStorage.getItem("token") ? 
-      <button type="button" class="btn btn-secondary" onClick={handleLogout}>LOGOUT</button> : 
-       <>
-       <a className="btn btn-primary mx-1" href="/login" role="button">Login</a>
-       <a className="btn btn-primary mx-1" href="/signin" role="button">SignUp</a>
-       </>    
+      <button type="button" class="btn btn-outline-primary" onClick={handleLogout}>LOGOUT</button> : 
+       <div>
+       <Link className="btn btn-outline-primary mx-1" to="/login" role="button">Login</Link>
+       <Link className="btn btn-outline-primary mx-1" to="/signin" role="button">SignUp</Link>
+       </div>    
       
       }
     </nav>
