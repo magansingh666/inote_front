@@ -37,23 +37,20 @@ export default function Edit1(props) {
         bottom: "0",
         zIndex: "1",
         background: "rgba(0, 0, 0, 0.2)",
-        "backdrop-filter": "blur(3px)",
+        backdropFilter: "blur(3px)",
       }}
     >
       <div
         style={{
-          zIndex: 2,
+        
           margin: "10px auto",
-          width: "450px",
+          maxWidth : "450px",
           background: "white",
           border: "2px solid blue",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "stretch",
-          borderRadius: "15px",
-          minHeight: "500px",
+          borderRadius: "2px",
+          maxHeight : "80vh",
           padding: "15px",
+          overflow: "auto"
         }}
       >
         <form onChange={handleDataChange}>
@@ -72,16 +69,16 @@ export default function Edit1(props) {
           <div className="form-group">
            
           </div>
-          <div style={{"height": "200px", "overflow": "scroll"}}>
+          
           <Edit4 onChange={handleDescriptionChange} initial={data.description}/>
 
-          </div>
+          
           
           <div className="text-right">
           <button
             type="submit"
             onClick={handleDoneClick}
-            className="btn btn-primary"            
+            className="btn btn-primary my-2"            
           >
             Done
           </button>
